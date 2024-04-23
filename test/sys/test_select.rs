@@ -301,8 +301,8 @@ fn test_fdset_from_iterable() {
         .map(|fd| (fd.as_raw_fd(), fd))
         .collect::<std::collections::HashMap<_, _>>();
     let writes = [w1, w2];
-    let reads_fdset: FdSet = reads.values().into();
-    let writes_fdset: FdSet = writes.iter().into();
+    let reads_fdset: FdSet = reads.values().map(|x| x.as_fd()).into();
+    let writes_fdset: FdSet = writes.iter().map(|x| x.as_fd()).into();
     assert_eq!(
         reads_fdset
             .fds(None)
